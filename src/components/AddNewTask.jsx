@@ -6,15 +6,15 @@ import { toast } from "react-toastify"
 
 const AddNewTask = () => {
 
-	const [todo, setTodo] = useState("")
+	const [todo, setTodo] = useState("") // State to hold the new task input
 
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
+	const dispatch = useDispatch() // Hook to dispatch actions
+	const navigate = useNavigate() // Hook to navigate between routes
 
 	function handleSubmit(e) {
-		e.preventDefault()
+		e.preventDefault() // Prevent default form submission behavior
 		try {
-			if (todo.trim()) {
+			if (todo.trim()) { // Check if the input is not just whitespace
 				dispatch(addTodo({
 					id: Date.now(), // simple unique id generator
 					text: todo,
@@ -22,10 +22,10 @@ const AddNewTask = () => {
 				}))
 				setTodo("") // clear input after submission
 				navigate('/viewtask') // navigate to all todos page
-				toast.success('Todo added successfully')
+				toast.success('Todo added successfully') // Show success message
 			}
 		} catch (error) {
-			toast.success("Something went wrong")
+			toast.error("Something went wrong") // Show error message
 		}
 	}
 	return (
@@ -48,7 +48,7 @@ const AddNewTask = () => {
 								placeholder="Enter new task"
 								className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								value={todo}
-								onChange={(e) => setTodo(e.target.value)}
+								onChange={(e) => setTodo(e.target.value)} // Update state on input change
 							/>
 						</div>
 					</div>
