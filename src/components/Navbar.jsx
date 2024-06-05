@@ -11,10 +11,11 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const navigation = [
-    { name: 'Add Task', href: '/', current: true },
-    { name: 'View Tasks', href: '/viewtask', current: false }
+    { name: 'Add Task', href: '/', current: true,id:1 },
+    { name: 'View Tasks', href: '/viewtask', current: false,id:2 }
 ]
 
 function classNames(...classes) {
@@ -22,6 +23,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+    const {todos} = useSelector(state=>state.todo)
+
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -56,11 +60,15 @@ export default function Navbar() {
                                                 to={item.href}
                                                 className={classNames(
                                                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'rounded-md px-3 py-2 text-sm font-medium'
+                                                    'rounded-md px-3 py-2 text-sm font-medium relative'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
+                                            {
+                                                item.id==2 && 
+                                                    <span className='bg-white text-black h-4 aspect-square rounded-full absolute right-0 flex items-center justify-center -top-1'>{todos.length}</span>
+                                            }
                                             </Link>
                                         ))}
                                     </div>

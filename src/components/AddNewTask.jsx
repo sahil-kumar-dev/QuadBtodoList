@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addTodo } from "../features/todoSlice"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const AddNewTask = () => {
 
@@ -12,14 +13,19 @@ const AddNewTask = () => {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		if (todo.trim()) {
-			dispatch(addTodo({
-				id: Date.now(), // simple unique id generator
-				text: todo,
-				completed: false
-			}))
-			setTodo("") // clear input after submission
-			navigate('/viewtask') // navigate to all todos page
+		try {
+			if (todo.trim()) {
+				dispatch(addTodo({
+					id: Date.now(), // simple unique id generator
+					text: todo,
+					completed: false
+				}))
+				setTodo("") // clear input after submission
+				navigate('/viewtask') // navigate to all todos page
+				toast.success('Todo added successfully')
+			}
+		} catch (error) {
+			toast.success("Something went wrong")
 		}
 	}
 	return (

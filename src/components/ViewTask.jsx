@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { completed, deleteTodo } from '../features/todoSlice'
+import { toast } from 'react-toastify'
 
 const ViewTask = () => {
 
@@ -10,6 +11,7 @@ const ViewTask = () => {
 
     function handleDelete(id) {
         dispatch(deleteTodo({ id }))
+        toast.warning('Todo deleted successully')
     }
 
     return (
@@ -24,8 +26,14 @@ const ViewTask = () => {
                                 <p className={`py-2 text-gray-700 ${todo.completed && 'line-through'}`}>{todo.text}</p>
                             </div>
                             <div className="flex gap-4 mt-4">
-                                <button onClick={() => dispatch(completed(todo.id))} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mark as {todo.completed ? 'Undone':'Done'}</button>
-                                <button onClick={() => handleDelete(todo.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                <button
+                                    onClick={() => [dispatch(completed(todo.id)), toast.info(`Todo marked as ${todo.completed ? 'Undone' : 'Done'}`)]}
+                                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mark as {todo.completed ? 'Undone' : 'Done'}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(todo.id)}
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete
+                                </button>
                             </div>
                         </div>
                     ))
